@@ -1,5 +1,6 @@
 package com.typing;
-
+import com.typing.service.RealTypingEngineService;
+import com.typing.service.ServiceLocator;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,10 +25,16 @@ public class MainApp extends Application {
     private static final double DEFAULT_HEIGHT = 800;
 
     @Override
-    public void start(Stage primaryStage) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/typing/fxml/main-layout.fxml"));
-            Parent root = loader.load();
+public void start(Stage primaryStage) {
+    try {
+        // Register Member 2's real typing engine before loading the UI
+        ServiceLocator.getInstance()
+                .registerTypingEngine(new RealTypingEngineService());
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/typing/fxml/main-layout.fxml")
+        );
+        Parent root = loader.load();
 
             Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
             scene.setFill(Color.web("#F5F5F0"));
