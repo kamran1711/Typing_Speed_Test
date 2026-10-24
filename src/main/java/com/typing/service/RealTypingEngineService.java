@@ -108,6 +108,7 @@ public void startTest(TestDifficulty difficulty, TestDuration duration) {
     timerTimeline.playFromStart();
 }
 
+
 @Override
 public TypingMetrics processInput(String currentInputText) {
 
@@ -116,43 +117,22 @@ public TypingMetrics processInput(String currentInputText) {
     }
 
     currentCharsTyped = currentInputText.length();
-    currentErrors = 0;
 
-    int checkLength = Math.min(
-            currentInputText.length(),
-            targetPassage.length()
+    currentErrors = TypingCalculator.countErrors(
+            currentInputText, targetPassage
     );
 
-    for (int i = 0; i < checkLength; i++) {
-        if (currentInputText.charAt(i) != targetPassage.charAt(i)) {
-            currentErrors++;
-        }
-    }
+    int correctCharacters = TypingCalculator.countCorrectCharacters(
+            currentInputText, targetPassage
+    );
 
-    if (currentInputText.length() > targetPassage.length()) {
-        currentErrors += currentInputText.length() - targetPassage.length();
-    }
+    currentAccuracy = TypingCalculator.calculateAccuracy(
+            correctCharacters, currentCharsTyped
+    );
 
-    if (currentCharsTyped > 0) {
-        int correctCharacters = currentCharsTyped - currentErrors;
-
-        currentAccuracy = Math.max(
-                0.0,
-                (correctCharacters / (double) currentCharsTyped) * 100.0
-        );
-    } else {
-        currentAccuracy = 100.0;
-    }
-
-    double elapsedMinutes = elapsedSeconds / 60.0;
-
-    if (elapsedMinutes > 0) {
-        currentWpm = (int) Math.round(
-                (currentCharsTyped / 5.0) / elapsedMinutes
-        );
-    } else {
-        currentWpm = 0;
-    }
+    currentWpm = TypingCalculator.calculateWpm(
+            correctCharacters, elapsedSeconds
+    );
 
     if (tickListener != null) {
         tickListener.accept(getCurrentMetrics());
