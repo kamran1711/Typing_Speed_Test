@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="20.0" styleClass="screen-root" maxWidth="Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typing.controller.DashboardController">
+    <children>
+        <!-- Top Row: Three Horizontal Statistic Cards (Best WPM, Average Accuracy, Total Tests) -->
+        <HBox fx:id="summaryCardsContainer" spacing="18.0" maxWidth="Infinity" fillHeight="true">
+            <!-- Dynamically populated with MetricCard components in DashboardController -->
+        </HBox>
+
+        <!-- Main Content Row: Left = Quick Start, Right = Recent Activity -->
+        <HBox spacing="18.0" VBox.vgrow="NEVER" maxWidth="Infinity" fillHeight="true">
+            <children>
+                <!-- Left Column: Quick Start Panel -->
+                <VBox fx:id="quickStartCard" styleClass="panel-card" spacing="16.0" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <children>
+                        <VBox spacing="3.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Quick Start" />
+                                <Label styleClass="panel-card-subtitle" text="Choose test parameters to begin an immediate typing speed benchmark." />
+                            </children>
+                        </VBox>
+
+                        <!-- Duration Selection -->
+                        <VBox spacing="6.0">
+                            <children>
+                                <Label styleClass="section-caption" text="DURATION" />
+                                <HBox spacing="8.0">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="durationGroup" />
+                                    </fx:define>
+                                    <RadioButton fx:id="radio30s" styleClass="choice-pill" text="30s" toggleGroup="$durationGroup" />
+                                    <RadioButton fx:id="radio60s" selected="true" styleClass="choice-pill" text="60s" toggleGroup="$durationGroup" />
+                                    <RadioButton fx:id="radio120s" styleClass="choice-pill" text="120s" toggleGroup="$durationGroup" />
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!-- Difficulty Selection -->
+                        <VBox spacing="6.0">
+                            <children>
+                                <Label styleClass="section-caption" text="DIFFICULTY" />
+                                <HBox spacing="8.0">
+                                    <fx:define>
+                                        <ToggleGroup fx:id="difficultyGroup" />
+                                    </fx:define>
+                                    <RadioButton fx:id="radioEasy" styleClass="choice-pill" text="Easy" toggleGroup="$difficultyGroup" />
+                                    <RadioButton fx:id="radioMedium" selected="true" styleClass="choice-pill" text="Medium" toggleGroup="$difficultyGroup" />
+                                    <RadioButton fx:id="radioHard" styleClass="choice-pill" text="Hard" toggleGroup="$difficultyGroup" />
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <Region VBox.vgrow="ALWAYS" />
+
+                        <!-- Prominent Start Test Button -->
+                        <Button fx:id="btnStartQuickTest" maxWidth="Infinity" styleClass="btn-primary" text="Start Test →" />
+                    </children>
+                </VBox>
+
+                <!-- Right Column: Recent Activity Panel (WPM Trend Chart & Performance Summary) -->
+                <VBox fx:id="performanceCard" styleClass="panel-card" spacing="12.0" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <children>
+                                <VBox spacing="2.0">
+                                    <children>
+                                        <Label styleClass="panel-card-title" text="Recent Activity" />
+                                        <Label fx:id="lastTestSummaryLabel" styleClass="panel-card-subtitle" text="WPM trend across recent sessions" />
+                                    </children>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <!-- Compact Performance Summary -->
+                                <HBox spacing="8.0" alignment="CENTER">
+                                    <children>
+                                        <Label fx:id="lastTestWpmBadge" styleClass="badge-easy" text="82 WPM" />
+                                        <Label fx:id="lastTestAccuracyBadge" styleClass="badge-medium" text="98.2% Acc" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Clean WPM Trend LineChart -->
+                        <LineChart fx:id="trendChart" createSymbols="true" legendVisible="false" prefHeight="165.0" VBox.vgrow="ALWAYS">
+                            <xAxis>
+                                <CategoryAxis fx:id="chartXAxis" side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="chartYAxis" autoRanging="false" lowerBound="50" upperBound="110" tickUnit="20" side="LEFT" />
+                            </yAxis>
+                        </LineChart>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- Bottom: Test History Table (Spanning available main content width) -->
+        <VBox fx:id="historyCard" styleClass="panel-card" spacing="12.0" VBox.vgrow="ALWAYS" maxWidth="Infinity">
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Test History" />
+                                <Label styleClass="panel-card-subtitle" text="Logged typing benchmark sessions and historical scores." />
+                            </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="btnViewAllHistory" styleClass="btn-secondary" text="View All →" />
+                    </children>
+                </HBox>
+
+                <TableView fx:id="recentHistoryTable" prefHeight="220.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colDate" prefWidth="180.0" text="DATE" />
+                        <TableColumn fx:id="colMode" prefWidth="130.0" text="MODE" />
+                        <TableColumn fx:id="colDuration" prefWidth="110.0" text="DURATION" />
+                        <TableColumn fx:id="colWpm" prefWidth="120.0" text="WPM" />
+                        <TableColumn fx:id="colAccuracy" prefWidth="120.0" text="ACCURACY" />
+                        <TableColumn fx:id="colScore" prefWidth="120.0" text="SCORE" />
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</VBox>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="settingsScreenRoot" styleClass="screen-root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typing.controller.SettingsController">
+    <children>
+        <VBox spacing="20.0" maxWidth="760.0">
+            <children>
+                <!-- Profile Settings Card -->
+                <VBox spacing="16.0" styleClass="panel-card">
+                    <children>
+                        <VBox spacing="4.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="User Profile Settings" />
+                                <Label styleClass="panel-card-subtitle" text="Update your display name and handle used in the header and analytics logs." />
+                            </children>
+                        </VBox>
+
+                        <GridPane hgap="16.0" vgap="14.0">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="180.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <children>
+                                <Label styleClass="field-label" text="Display Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <TextField fx:id="userNameField" promptText="Enter full name" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label styleClass="field-label" text="Profile Handle:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <TextField fx:id="userHandleField" promptText="@handle" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+
+                <!-- Application Test Preferences Card -->
+                <VBox spacing="16.0" styleClass="panel-card">
+                    <children>
+                        <VBox spacing="4.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Test &amp; UI Preferences" />
+                                <Label styleClass="panel-card-subtitle" text="Customize default session parameters and application appearance." />
+                            </children>
+                        </VBox>
+
+                        <GridPane hgap="16.0" vgap="14.0">
+                            <columnConstraints>
+                                <ColumnConstraints prefWidth="180.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <children>
+                                <Label styleClass="field-label" text="Default Duration:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="defaultDurationCombo" maxWidth="Infinity" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                <Label styleClass="field-label" text="Default Difficulty:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="defaultDifficultyCombo" maxWidth="Infinity" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                <Label styleClass="field-label" text="Theme Appearance:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                <ComboBox fx:id="themeModeCombo" maxWidth="Infinity" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+
+                <!-- Actions and Status -->
+                <HBox alignment="CENTER_LEFT" spacing="14.0">
+                    <children>
+                        <Button fx:id="btnSaveProfile" styleClass="btn-primary" text="Save Preferences" />
+                        <Button fx:id="btnResetData" styleClass="btn-danger" text="Reset All Data" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="statusMessageLabel" styleClass="text-accent" style="-fx-font-weight: 600; -fx-font-size: 13px;" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</StackPane>

@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.typing</groupId>
+    <artifactId>typing-speed-analyzer</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Typing Speed Test and Performance Analyzer</name>
+    <description>College Java OOP Project - Modern JavaFX Desktop UI &amp; Analyzer</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <javafx.version>21.0.2</javafx.version>
+    </properties>
+
+    <dependencies>
+        <!-- JavaFX Controls -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- JavaFX FXML -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- JavaFX Graphics -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- JUnit 5 Testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+
+            <!-- JavaFX Maven Plugin -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <!-- Default configuration for running with: mvn clean javafx:run -->
+                        <id>default-cli</id>
+                        <configuration>
+                            <mainClass>com.typing.MainApp</mainClass>
+                            <options>
+                                <option>--enable-native-access=javafx.graphics</option>
+                            </options>
+                            <launcher>typing-analyzer</launcher>
+                            <jlinkImageName>typing-analyzer-image</jlinkImageName>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="resultsScreenRoot" styleClass="screen-root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.typing.controller.ResultsController">
+    <children>
+        <VBox spacing="20.0">
+            <children>
+                <!-- Top Overview Card -->
+                <HBox alignment="CENTER_LEFT" spacing="24.0" styleClass="panel-card" style="-fx-padding: 18px 24px;">
+                    <children>
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Latest Test Summary" />
+                                <Label fx:id="latestModeLabel" styleClass="panel-card-subtitle" text="60s • Medium • Today" />
+                            </children>
+                        </VBox>
+
+                        <Separator orientation="VERTICAL" styleClass="separator" style="-fx-opacity: 0.25;" />
+
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="section-caption" text="NET SPEED" />
+                                <Label fx:id="latestWpmLabel" styleClass="text-accent" style="-fx-font-size: 24px; -fx-font-weight: 700;" text="82 WPM" />
+                            </children>
+                        </VBox>
+
+                        <Separator orientation="VERTICAL" styleClass="separator" style="-fx-opacity: 0.25;" />
+
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="section-caption" text="ACCURACY" />
+                                <Label fx:id="latestAccuracyLabel" styleClass="text-primary" style="-fx-font-size: 24px; -fx-font-weight: 700;" text="98.2%" />
+                            </children>
+                        </VBox>
+
+                        <Separator orientation="VERTICAL" styleClass="separator" style="-fx-opacity: 0.25;" />
+
+                        <VBox spacing="2.0">
+                            <children>
+                                <Label styleClass="section-caption" text="FINAL SCORE" />
+                                <Label fx:id="latestScoreLabel" styleClass="text-primary" style="-fx-font-size: 24px; -fx-font-weight: 700;" text="870 pts" />
+                            </children>
+                        </VBox>
+
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <VBox alignment="CENTER_RIGHT" spacing="4.0">
+                            <children>
+                                <Label styleClass="section-caption" text="GRADE" />
+                                <Label fx:id="latestGradeBadge" styleClass="grade-badge, grade-large" text="A+" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- Two-Column Breakdown Row -->
+                <HBox spacing="18.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <!-- Left Panel: Detailed Metrics Table -->
+                        <VBox styleClass="panel-card" spacing="14.0" HBox.hgrow="ALWAYS" prefWidth="480.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Keystroke &amp; Velocity Breakdown" />
+                                <Label styleClass="panel-card-subtitle" text="Precise breakdown of speed calculation and penalty adjustments." />
+
+                                <GridPane hgap="16.0" vgap="12.0" style="-fx-padding: 8px 0;">
+                                    <columnConstraints>
+                                        <ColumnConstraints prefWidth="170.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <children>
+                                        <Label styleClass="field-label" text="Gross Typing Speed:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                        <Label fx:id="grossWpmLabel" styleClass="text-primary" style="-fx-font-weight: 600;" text="86 WPM" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                        <Label styleClass="field-label" text="Net Evaluated Speed:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                        <Label fx:id="netWpmLabel" styleClass="text-accent" style="-fx-font-weight: 600;" text="82 WPM" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                        <Label styleClass="field-label" text="Character Keystrokes:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                        <Label fx:id="charactersTypedLabel" styleClass="text-primary" style="-fx-font-weight: 600;" text="410 chars" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+
+                                        <Label styleClass="field-label" text="Total Mistyped Errors:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                                        <Label fx:id="errorsCountLabel" styleClass="text-danger" style="-fx-font-weight: 600;" text="2 errors" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                                        <Label styleClass="field-label" text="Session Duration:" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                                        <Label fx:id="testDurationLabel" styleClass="text-primary" style="-fx-font-weight: 600;" text="60 seconds" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+                                        <Label styleClass="field-label" text="Rhythm Consistency:" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+                                        <Label fx:id="consistencyLabel" styleClass="text-accent" style="-fx-font-weight: 600;" text="94.6% Cadence" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+                                    </children>
+                                </GridPane>
+
+                                <Region VBox.vgrow="ALWAYS" />
+
+                                <HBox spacing="10.0">
+                                    <children>
+                                        <Button fx:id="btnStartNewTest" styleClass="btn-primary" text="Start New Test →" />
+                                        <Button fx:id="btnViewHistory" styleClass="btn-secondary" text="View All History" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+
+                        <!-- Right Panel: Historical Progression Trend Chart -->
+                        <VBox styleClass="panel-card" spacing="12.0" HBox.hgrow="ALWAYS" prefWidth="540.0">
+                            <children>
+                                <Label styleClass="panel-card-title" text="Recent Progression Velocity" />
+                                <Label styleClass="panel-card-subtitle" text="Comparing velocity across your previous test sessions." />
+
+                                <LineChart fx:id="velocityChart" createSymbols="true" legendVisible="false" prefHeight="240.0" VBox.vgrow="ALWAYS">
+                                    <xAxis>
+                                        <CategoryAxis fx:id="chartXAxis" side="BOTTOM" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis fx:id="chartYAxis" autoRanging="false" lowerBound="50" upperBound="110" tickUnit="20" side="LEFT" />
+                                    </yAxis>
+                                </LineChart>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</StackPane>
