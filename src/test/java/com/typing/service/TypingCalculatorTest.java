@@ -50,4 +50,34 @@ class TypingCalculatorTest {
         assertEquals(0, TypingCalculator.calculateWpm(0, 60));
     }
 
+    @Test
+    void shouldCalculatePerformanceScoreOutOfHundred() {
+        int score = TypingCalculator.calculatePerformanceScore(60, 95.0, 4, 60);
+        assertTrue(score >= 0 && score <= 100);
+        assertEquals(85, score);
+    }
+
+    @Test
+    void shouldClassifyTypingPerformanceIntoLevels() {
+        assertEquals("Excellent", TypingCalculator.classifyTypingPerformance(95));
+        assertEquals("Good", TypingCalculator.classifyTypingPerformance(80));
+        assertEquals("Average", TypingCalculator.classifyTypingPerformance(65));
+        assertEquals("Needs Improvement", TypingCalculator.classifyTypingPerformance(45));
+        assertEquals("Beginner", TypingCalculator.classifyTypingPerformance(20));
+    }
+
+    @Test
+    void shouldGenerateHelpfulFeedbackAndSuggestions() {
+        String feedback = TypingCalculator.generateFeedback(65, 96.0, 3);
+        assertNotNull(feedback);
+        assertTrue(feedback.toLowerCase().contains("accuracy") || feedback.toLowerCase().contains("speed") || feedback.toLowerCase().contains("practice"));
+    }
+
+    @Test
+    void shouldCompareCurrentAndPreviousPerformance() {
+        assertTrue(TypingCalculator.comparePerformance(82, 70).contains("Improved"));
+        assertTrue(TypingCalculator.comparePerformance(68, 75).contains("Dropped"));
+        assertTrue(TypingCalculator.comparePerformance(80, 80).contains("consistent"));
+    }
+
 }
