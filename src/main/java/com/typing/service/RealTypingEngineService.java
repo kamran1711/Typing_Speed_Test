@@ -15,19 +15,63 @@ import java.util.function.Consumer;
 
 public class RealTypingEngineService implements ITypingEngineService {
 
-    private static final String EASY_PASSAGE =
-            "The quick brown fox jumps over the lazy dog. Practice typing every day to improve your speed.";
+    // ==================== EASY PASSAGES ====================
+// Short sentences with familiar words.
 
-    private static final String MEDIUM_PASSAGE =
-            "Software development requires careful planning, consistent practice, and attention to detail.";
+private static final String[] EASY_PASSAGES = {
+        "The sun is bright. Birds sing in the tree. I like to walk in the park every day.",
 
-    private static final String HARD_PASSAGE =
-            "Efficient algorithms improve computational performance while maintaining accuracy and reliability.";
+        "My dog runs in the yard. It likes to play with a ball. We have fun in the sun.",
+
+        "I wake up early and drink a cup of milk. Then I read a book and get ready for school.",
+
+        "The cat sits on the mat. It looks at the bird near the window and waits for it to move.",
+
+        "My friend and I ride our bikes after school. We take a short path and stop near a lake.",
+
+        "Every day I try to learn new words. I read them aloud and type them slowly until I get them right."
+};
+
+
+// ==================== MEDIUM PASSAGES ====================
+// Longer sentences with varied vocabulary and sentence structures.
+
+private static final String[] MEDIUM_PASSAGES = {
+        "Learning a new skill requires patience, regular practice, and a willingness to improve through experience.",
+
+        "Software development involves planning, writing code, testing features, and correcting errors before releasing an application.",
+
+        "A healthy routine combines physical activity, balanced meals, sufficient sleep, and time for personal development.",
+
+        "Successful teamwork depends on clear communication, mutual respect, shared responsibilities, and consistent cooperation.",
+
+        "Technology allows people to exchange information quickly, collaborate across distances, and discover new opportunities for learning.",
+
+        "Managing time effectively helps students complete assignments, prepare for examinations, and maintain a balanced daily schedule."
+};
+
+
+// ==================== HARD PASSAGES ====================
+// Advanced vocabulary, longer words, and more complex sentences.
+
+private static final String[] HARD_PASSAGES = {
+        "Algorithmic optimization improves computational efficiency by reducing unnecessary operations while preserving the accuracy of the final result.",
+
+        "Contemporary cybersecurity strategies require continuous monitoring, sophisticated authentication mechanisms, and comprehensive protection against emerging vulnerabilities.",
+
+        "Interdisciplinary collaboration encourages researchers to combine specialized knowledge, evaluate competing hypotheses, and develop innovative solutions to complex problems.",
+
+        "Reliable information systems depend on architectural scalability, systematic verification, fault tolerance, and carefully coordinated resource allocation.",
+
+        "Environmental sustainability requires technological innovation, responsible consumption, long-term planning, and measurable improvements in resource utilization.",
+
+        "Sophisticated computational models analyze extensive datasets, identify meaningful correlations, and generate predictions while accounting for uncertainty and potential limitations."
+};
 
     private TestDifficulty currentDifficulty = TestDifficulty.MEDIUM;
     private TestDuration currentDuration = TestDuration.SIXTY_SEC;
 
-    private String targetPassage = MEDIUM_PASSAGE;
+    private String targetPassage = MEDIUM_PASSAGES[0];
 
     private boolean running = false;
 
@@ -93,10 +137,10 @@ public void startTest(TestDifficulty difficulty, TestDuration duration) {
     currentCharsTyped = 0;
 
     switch (currentDifficulty) {
-        case EASY -> targetPassage = EASY_PASSAGE;
-        case MEDIUM -> targetPassage = MEDIUM_PASSAGE;
-        case HARD -> targetPassage = HARD_PASSAGE;
-    }
+    case EASY -> targetPassage = getRandomPassage(EASY_PASSAGES);
+    case MEDIUM -> targetPassage = getRandomPassage(MEDIUM_PASSAGES);
+    case HARD -> targetPassage = getRandomPassage(HARD_PASSAGES);
+}
 
     running = true;
 
@@ -107,8 +151,10 @@ public void startTest(TestDifficulty difficulty, TestDuration duration) {
     initTimer();
     timerTimeline.playFromStart();
 }
-
-
+private String getRandomPassage(String[] passages) {
+    int randomIndex = (int) (Math.random() * passages.length);
+    return passages[randomIndex];
+}
 @Override
 public TypingMetrics processInput(String currentInputText) {
 
