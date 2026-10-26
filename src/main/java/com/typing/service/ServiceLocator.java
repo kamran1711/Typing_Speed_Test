@@ -1,6 +1,6 @@
 package com.typing.service;
 
-import com.typing.service.mock.MockHistoryService;
+import com.typing.service.FileHistoryService;
 import com.typing.service.mock.MockTypingEngineService;
 import com.typing.service.mock.MockUserProfileService;
 
@@ -26,7 +26,7 @@ public class ServiceLocator {
     private ServiceLocator() {
         // Defaults to robust, interactive mock implementations
         this.typingEngineService = new MockTypingEngineService();
-        this.historyService = new MockHistoryService();
+        this.historyService = new FileHistoryService();
         this.userProfileService = new MockUserProfileService();
     }
 
